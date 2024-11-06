@@ -1,6 +1,6 @@
-# Fastapi Skeleton
+# Todo APP
 
-Fastapi Skeleton is a code base to start any project using Fast API
+A Backend API to manage todo list using Fast API
 
 
 ## Installation
