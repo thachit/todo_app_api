@@ -1,3 +1,4 @@
+from contextlib import contextmanager
 from sqlalchemy import create_engine, URL
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -17,3 +18,11 @@ engine = create_engine(database, echo=True if Config.DEBUG else False)
 session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
+
+@contextmanager
+def get_session():
+    session = session_local()
+    try:
+        yield session
+    finally:
+        session.close()
