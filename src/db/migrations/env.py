@@ -1,17 +1,13 @@
-import os
 import pkgutil
 import importlib
 from logging.config import fileConfig
-
+from sqlalchemy import URL
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-from sqlalchemy import URL
-
+from src import models
+from src.db.db import Base
 from alembic import context
 from src.core.config import Config as ProjectConfig
-
-from src.db.db import Base
-
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -25,7 +21,6 @@ db_url = URL.create(
     port=ProjectConfig.DATABASE_PORT,
     database=ProjectConfig.DATABASE_NAME
 )
-
 config.set_main_option('sqlalchemy.url', db_url.render_as_string(hide_password=False))
 
 # Interpret the config file for Python logging.
@@ -37,11 +32,6 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-# from src.models.users import User
-# target_metadata = User.metadata
-
-# load all models in src.models
-from src import models
 def import_all_models(package):
     for importer, module_name, ispkg in pkgutil.iter_modules(package.__path__):
         importlib.import_module(f"{package.__name__}.{module_name}")
