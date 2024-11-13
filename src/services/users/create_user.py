@@ -10,9 +10,10 @@ from src.utils.hashing.encrypt import encrypt_password
 async def create_user(params: RegisterDto) -> UserResponse:
     try:
         with get_session() as session:
+            encrypted_password = encrypt_password(params.password)
             user = User(
                 email=params.email,
-                hashed_password=encrypt_password(params.password),
+                hashed_password=encrypted_password,
                 username=params.username,
                 full_name=params.full_name
             )

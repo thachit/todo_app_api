@@ -12,3 +12,6 @@ class Config:
     DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD", None)
     DATABASE_NAME = os.getenv("DATABASE_NAME", "postgres")
     DEBUG = os.getenv("DEBUG", "false").lower() in ("true", 1)
+    SECRET_KEY = os.getenv("SECRET_KEY")
+    TOKEN_EXPIRATION = os.getenv("TOKEN_EXPIRATION", 86400)
+
