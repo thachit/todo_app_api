@@ -13,5 +13,7 @@ class Config:
     DATABASE_NAME = os.getenv("DATABASE_NAME", "postgres")
     DEBUG = os.getenv("DEBUG", "false").lower() in ("true", 1)
     SECRET_KEY = os.getenv("SECRET_KEY")
-    TOKEN_EXPIRATION = os.getenv("TOKEN_EXPIRATION", 86400)
+    TOKEN_EXPIRATION = os.getenv("TOKEN_EXPIRATION", 86400) # 1 day
+    REFRESH_SECRET_KEY = os.getenv("REFRESH_SECRET_KEY")
+    REFRESH_TOKEN_EXPIRATION = os.getenv("REFRESH_TOKEN_EXPIRATION", 2592000) # 30 days
 

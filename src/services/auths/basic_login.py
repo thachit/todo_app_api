@@ -1,12 +1,12 @@
-import bcrypt
 from fastapi import HTTPException
-from src.schemas.login import LoginDto, LoginResponse
+from src.schemas.login import LoginDto
+from src.schemas.token import TokenResponse
 from src.db.db import get_session
 from src.models.user import User
 from src.utils.hashing.encrypt import check_password
 from src.utils.jwt_token import create_jwt_token
 
-async def basic_login(params: LoginDto) -> LoginResponse:
+async def basic_login(params: LoginDto) -> TokenResponse:
 
     with get_session() as session:
         user = session.query(User).filter(User.email == params.email).first()
@@ -17,11 +17,13 @@ async def basic_login(params: LoginDto) -> LoginResponse:
     if not is_password_valid:
         raise HTTPException(detail="Invalid email or password", status_code=401)
 
-    access_token, expires_in = create_jwt_token(user.id, user.username)
+    access_token, expires_in = create_jwt_token(user.id, user.username, is_refresh=False)
+    refresh_token, refresh_expires_in = create_jwt_token(user.id, user.username, is_refresh=True)
+
     return {
         "access_token": access_token,
         "token_type": "bearer",
         "expires_in": expires_in,
-        "refresh_token": None
+        "refresh_token": refresh_token
     }
 
