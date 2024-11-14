@@ -1,5 +1,3 @@
-from typing import Optional
-
 from pydantic import BaseModel, field_validator, EmailStr, Field
 
 
@@ -22,9 +20,3 @@ class LoginDto(BaseLoginDto):
             raise ValueError("Password must contain at least one digit")
 
         return password
-
-class LoginResponse(BaseModel):
-    access_token: str
-    token_type: str
-    expires_in: int
-    refresh_token: Optional[str]
