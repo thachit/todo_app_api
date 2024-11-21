@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-api-deployment
+  labels:
+    app: todo-api-server
+    type: todo-api
+  namespace: todo-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: todo-api-pod
+      type: backend
+  template:
+    metadata:
+      labels:
+        app: todo-api-pod
+        type: backend
+    spec:
+      containers:
+        - name: todo-app
+          image: thachit/todo_app:lasted
+          ports:
+            - containerPort: 28002
+          envFrom:
+            - configMapRef:
+                name: todo-api-configuration
+            - secretRef:
+                name: todo-api-secret-configuration
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 28002
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: regcred
