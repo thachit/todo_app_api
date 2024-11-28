@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: todo-app
-          image: thachit/todo_app:lasted
+          image: thachit/todo_app:1.0.1
           ports:
             - containerPort: 28002
           envFrom:

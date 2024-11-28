@@ -6,7 +6,7 @@ metadata:
 data:
   DEBUG: "true"
   APP_NAME: "todo_app"
-  DATABASE_HOST: "192.168.0.4"
+  DATABASE_HOST: "192.168.0.16"
   DATABASE_PORT: "543"
   DATABASE_NAME: "todo_app"
   TOKEN_EXPIRATION: "86400"
