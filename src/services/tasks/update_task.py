@@ -13,7 +13,10 @@ async def update_task(task_id: str, user_id: str, params: UpdateTaskDto) -> Task
         update_fields = list(params.model_fields.keys())
         for field in update_fields:
             if getattr(params, field) is not None:
-                setattr(task, field, getattr(params, field))
+                if field == 'priority':
+                    setattr(task, field, params.priority.value)
+                else:
+                    setattr(task, field, getattr(params, field))
         try:
             session.commit()
         except Exception as e:
