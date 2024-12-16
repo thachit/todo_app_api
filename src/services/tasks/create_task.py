@@ -10,7 +10,7 @@ async def create_task(user_id: str, params: CreateTaskDto) -> TaskResponse:
                 title=params.title,
                 description=params.description,
                 due_date=params.due_date,
-                priority=params.priority,
+                priority=params.priority.value,
                 status=params.status,
                 user_id=user_id
             )
