@@ -88,6 +88,7 @@ class GetTaskQueryDto(BaseModel):
     limit: Optional[int] = Field(default=0)
     order: Optional[GetTaskQueryOrder] = Field(default=GetTaskQueryOrder.asc)
     order_by: Optional[str] = Field(default="priority")
+    title: Optional[str] = Field(default=None)
     due_date: Optional[str] = Field(default=None)
     due_date_operator: Optional[GetTaskQueryDueDateOperator] = Field(default=GetTaskQueryDueDateOperator.gte)
     status: Optional[TaskStatus] = Field(default=None)
@@ -99,6 +100,7 @@ class GetTaskQueryDto(BaseModel):
             limit: int = Query(default=10),
             order: GetTaskQueryOrder = Query(default=GetTaskQueryOrder.asc),
             order_by: str = Query(default="priority"),
+            title: str = Query(default=None),
             due_date: str = Query(default=None),
             due_date_operator: GetTaskQueryDueDateOperator = Query(default=None),
             status: TaskStatus = Query(default=None)
@@ -108,6 +110,7 @@ class GetTaskQueryDto(BaseModel):
             limit=limit,
             order=order,
             order_by=order_by,
+            title=title,
             due_date=due_date,
             due_date_operator=due_date_operator,
             status=status

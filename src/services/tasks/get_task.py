@@ -27,6 +27,9 @@ async def get_tasks(user_id: str, query: GetTaskQueryDto) -> TaskListResponse:
     with (get_session() as session):
         tasks = session.query(Task).filter(Task.user_id == user_id)
 
+        if query.title:
+            tasks = tasks.filter(Task.title.ilike(f"%{query.title}%"))
+
         if query.due_date and query.due_date_operator:
             due_date_query = build_filter_query(Task.due_date, query.due_date, query.due_date_operator)
             tasks = tasks.filter(due_date_query)
