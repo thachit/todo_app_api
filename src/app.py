@@ -1,6 +1,7 @@
 from sys import prefix
 from starlette.responses import JSONResponse
 from fastapi import FastAPI, Request, status
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 from fastapi.encoders import jsonable_encoder
 from src.core.config import Config
@@ -9,6 +10,21 @@ from src.api.api_v1.login import login_router_v1
 from src.api.api_v1.refresh_token import refresh_token_router_v1
 from src.api.api_v1.tasks import task_router_v1
 fast_api = FastAPI()
+
+origins = [
+    "http://localhost:3001",
+    "http://127.0.0.1:3001",
+    "http://localhost:3002",
+    "http://localhost:3002",
+]
+
+fast_api.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @fast_api.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
